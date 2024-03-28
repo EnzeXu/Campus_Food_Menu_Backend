@@ -1,0 +1,8 @@
+pandas
+bs4
+tqdm
+requests
+schedule
+lxml
+pretty_html_table
+selenium

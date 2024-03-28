@@ -1,0 +1,9 @@
+test*
+.DS_Store
+.idea/*
+__pycache__/*
+password
+
+baidu*
+mail.py
+strings.py
