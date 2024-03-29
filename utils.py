@@ -66,24 +66,24 @@ def get_new_cookie(url):
         return f"Error: Received response code {response.status_code}"
 
 
-def translate_one_dish(string):
-    baidu_return = baidu_translate(string)
-    if len(baidu_return) == 0:
-        res = "FAILED TO TRANSLATE"
-    elif "dst" in baidu_return[0]:
-        res = baidu_return[0]["dst"]
-    else:
-        res = "FAILED TO TRANSLATE"
-    return "{} ({})".format(string, res)
+# def translate_one_dish(string):
+#     baidu_return = baidu_translate(string)
+#     if len(baidu_return) == 0:
+#         res = "FAILED TO TRANSLATE"
+#     elif "dst" in baidu_return[0]:
+#         res = baidu_return[0]["dst"]
+#     else:
+#         res = "FAILED TO TRANSLATE"
+#     return "{} ({})".format(string, res)
 
 
-class MyTranslate:
-    def __init__(self):
-        self.count = 0
-
-    def translate(self, string):
-        self.count += len(string)
-        return translate_one_dish(string)
+# class MyTranslate:
+#     def __init__(self):
+#         self.count = 0
+#
+#     def translate(self, string):
+#         self.count += len(string)
+#         return translate_one_dish(string)
 
 
 # def get_menu(date, save_flag=True):
@@ -348,7 +348,7 @@ def one_day_job(force=False):
 
     for one_date_string, one_date_string_save in zip(date_string_available_list, date_string_available_list_save):
         for one_location in location_list:
-            if not force and one_date_string_save in os.listdir(f"./saves/{one_location}/"):
+            if not force and os.path.exists(f"./saves/{one_location}/") and one_date_string_save in os.listdir(f"./saves/{one_location}/"):
                 logging.info(f"'{one_date_string_save}' exists in './saves/{one_location}/'. Skipped.")
                 continue
             try:
