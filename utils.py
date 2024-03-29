@@ -335,6 +335,8 @@ def get_following_days(n=10, format="%m/%d/%Y"):
 
 def one_day_job(force=False):
     date_string = get_now_string("%m/%d/%Y")
+    if not os.path.exists("./saves"):
+        os.makedirs("./saves")
     logging.basicConfig(filename="./saves/logs.log", filemode="a", level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
     # date_string_save = get_now_string("%Y-%m-%d")
     date_string_full = get_now_string()
@@ -352,7 +354,7 @@ def one_day_job(force=False):
                 logging.info(f"'{one_date_string_save}' exists in './saves/{one_location}/'. Skipped.")
                 continue
             try:
-                url_menu = f"https://williamandmary.campusdish.com/api/menu/GetMenus?locationId=78391&mode=Daily&date={one_date_string}&periodId={one_location}"
+                url_menu = f"https://williamandmary.campusdish.com/api/menu/GetMenus?locationId={one_date_string}&mode=Daily&date={one_date_string}"
                 data = http_get(complete_cookie, url_menu)
                 data = json.loads(data)
                 content_length = len(str(json.dumps(data)))
