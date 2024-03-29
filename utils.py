@@ -9,13 +9,13 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 
-from baidu_api import baidu_translate
-from mail import Mail
-from strings import *
+# from baidu_api import baidu_translate
+# from mail import Mail
+# from strings import *
 from const import *
 import pytz
 import logging
-from pretty_html_table import build_table
+# from pretty_html_table import build_table
 
 
 # def now_time_string(string_format="%Y-%m-%d %H:%M:%S"):
