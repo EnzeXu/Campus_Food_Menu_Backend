@@ -20,6 +20,7 @@ def chrome_driver(url, headless, chromedriver_path=None):
     if chromedriver_path is None:
         chromedriver_path = "{0}{1}{2}{3}{4}{5}{6}".format(
             sys.path[0], os.sep, "chromedriver", os.sep, platform.system().lower(), os.sep, "chromedriver")
+    print(f"chormedriver path: {chromedriver_path}")
     service = ChromeService(executable_path=chromedriver_path)
     driver = webdriver.Chrome(options=chrome_options, service=service)
     # driver.maximize_window()
