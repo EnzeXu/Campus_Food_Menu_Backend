@@ -354,7 +354,7 @@ def one_day_job(force=False):
                 logging.info(f"'{one_date_string_save}' exists in './saves/{one_location}/'. Skipped.")
                 continue
             try:
-                url_menu = f"https://williamandmary.campusdish.com/api/menu/GetMenus?locationId={one_date_string}&mode=Daily&date={one_date_string}"
+                url_menu = f"https://williamandmary.campusdish.com/api/menu/GetMenus?locationId={one_location}&mode=Daily&date={one_date_string}"
                 data = http_get(complete_cookie, url_menu)
                 data = json.loads(data)
                 content_length = len(str(json.dumps(data)))
