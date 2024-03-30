@@ -333,13 +333,13 @@ def get_following_days(n=10, format="%m/%d/%Y"):
     return date_list
 
 
-def one_day_job(force=False):
+def one_day_job(force=False, one_time_flag=False):
     date_string = get_now_string("%m/%d/%Y")
     print(get_now_string(), f"[ ok ] Triggered on {date_string}.")
     if not os.path.exists("./saves"):
         os.makedirs("./saves")
     logging.basicConfig(filename="./saves/logs.log", filemode="a", level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
-    logging.info(f"Starting ... ")
+    logging.info(f"Starting [Schedule Mode] ..." if not one_time_flag else f"Starting [One-time Mode] ...")
     # date_string_save = get_now_string("%Y-%m-%d")
     date_string_full = get_now_string()
     complete_cookie = get_cookie(f'https://williamandmary.campusdish.com/api/menu/GetMenus?locationId=78391&mode=Daily&date={date_string}')
@@ -447,7 +447,7 @@ if __name__ == "__main__":
     # # # print(data)
     # print(json.dumps(data, indent=4))
 
-    one_day_job()
+    one_day_job(one_time_flag=True)
     # logging.basicConfig(filename='app.log', filemode='a', level=logging.INFO,
     #                     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     # logging.info("An error occurred1")
