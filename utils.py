@@ -392,8 +392,8 @@ def one_day_job(force=False, one_time_flag=False):
             except Exception as e:
                 logging.error(f"An error occurred in fetching data: {str(e)}", exc_info=True)
                 logging.info(f"Failed to deal with {one_location} ({LOCATION_DICTIONARY[one_location]}) on {one_date_string}! Skipping")
-    logging.info(f"Finished. {date_string}. Total: {task_count} / Newly-downloaded: {task_count - skip_existing_count - skip_short_count} / Existing-skip: {skip_existing_count} / Short-skip: {skip_short_count}")
-    print(get_now_string(), f"[ ok ] Finished {date_string}. Total: {task_count} / Newly-downloaded: {task_count - skip_existing_count - skip_short_count} / Existing-skip: {skip_existing_count} / Short-skip: {skip_short_count}")
+    logging.info(f"Finished. {date_string}. Total: {task_count} | Newly-downloaded: {task_count - skip_existing_count - skip_short_count} | Existing-skip: {skip_existing_count} | Short-skip: {skip_short_count}")
+    print(get_now_string(), f"[ ok ] Finished {date_string}. Total: {task_count} | Newly-downloaded: {task_count - skip_existing_count - skip_short_count} | Existing-skip: {skip_existing_count} | Short-skip: {skip_short_count}")
 
 
 
