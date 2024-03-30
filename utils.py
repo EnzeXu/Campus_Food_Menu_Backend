@@ -335,6 +335,8 @@ def get_following_days(n=10, format="%m/%d/%Y"):
 
 def one_day_job(force=False):
     date_string = get_now_string("%m/%d/%Y")
+    print(get_now_string(), f"[ ok ] Triggered for {date_string}.")
+    logging.info(f"Starting ... ")
     if not os.path.exists("./saves"):
         os.makedirs("./saves")
     logging.basicConfig(filename="./saves/logs.log", filemode="a", level=logging.INFO, format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
@@ -382,6 +384,7 @@ def one_day_job(force=False):
             except Exception as e:
                 logging.error(f"An error occurred in fetching data: {str(e)}", exc_info=True)
                 logging.info(f"Failed to deal with {one_location} ({LOCATION_DICTIONARY[one_location]}) on {one_date_string}! Skipping")
+    logging.info(f"Finished.")
 
 
 
