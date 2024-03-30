@@ -335,7 +335,7 @@ def get_following_days(n=10, format="%m/%d/%Y"):
 
 def one_day_job(force=False):
     date_string = get_now_string("%m/%d/%Y")
-    print(get_now_string(), f"[ ok ] Triggered for {date_string}.")
+    print(get_now_string(), f"[ ok ] Triggered on {date_string}.")
     logging.info(f"Starting ... ")
     if not os.path.exists("./saves"):
         os.makedirs("./saves")
@@ -346,14 +346,20 @@ def one_day_job(force=False):
     # date_string_available_list = get_following_days(n=14)
     # date_string_available_list_save = get_following_days(n=14, format="%Y-%m-%d")
     date_string_available_list, date_string_available_list_save = get_available_date_list(cookie=complete_cookie)
-    logging.info(f"date_string_available_list: {str(date_string_available_list)}")
+    logging.info(f"date_string_available_list (length={len(date_string_available_list)}): {str(date_string_available_list)}")
     location_list = LOCATION_LIST
     logging.info(f"location_list: {str(location_list)}")
 
+    task_count = 0
+    skip_existing_count = 0
+    skip_short_count = 0
+
     for one_date_string, one_date_string_save in zip(date_string_available_list, date_string_available_list_save):
         for one_location in location_list:
+            task_count += 1
             if not force and os.path.exists(f"./saves/{one_location}/") and one_date_string_save in os.listdir(f"./saves/{one_location}/"):
                 logging.info(f"'{one_date_string_save}' exists in './saves/{one_location}/'. Skipped.")
+                skip_existing_count += 1
                 continue
             try:
                 url_menu = f"https://williamandmary.campusdish.com/api/menu/GetMenus?locationId={one_location}&mode=Daily&date={one_date_string}"
@@ -361,8 +367,9 @@ def one_day_job(force=False):
                 data = json.loads(data)
                 content_length = len(str(json.dumps(data)))
                 logging.info(f"data length: {content_length} ({one_location} ({LOCATION_DICTIONARY.get(one_location)}) on {one_date_string})")
-                if content_length < 30000:
-                    logging.info(f"Too short response: {content_length} < 30000. Skipped.")
+                if content_length < 15000:
+                    logging.info(f"Too short response: {content_length} < 30000. Skipped."
+                    skip_short_count += 1
                     continue
                 save_folder = f"./saves/{one_location}/{one_date_string_save}"
                 if not os.path.exists(save_folder):
@@ -384,7 +391,8 @@ def one_day_job(force=False):
             except Exception as e:
                 logging.error(f"An error occurred in fetching data: {str(e)}", exc_info=True)
                 logging.info(f"Failed to deal with {one_location} ({LOCATION_DICTIONARY[one_location]}) on {one_date_string}! Skipping")
-    logging.info(f"Finished.")
+    logging.info(f"Finished. {date_string}. Total: {task_count} / Newly-downloaded: {task_count - skip_existing_count - skip_short_count} / Existing-skip: {skip_existing_count} / Short-skip: {skip_short_count}")
+    print(get_now_string(), f"[ ok ] Finished {date_string}. Total: {task_count} / Newly-downloaded: {task_count - skip_existing_count - skip_short_count} / Existing-skip: {skip_existing_count} / Short-skip: {skip_short_count}")
 
 
 
