@@ -367,8 +367,9 @@ def one_day_job(force=False):
                 data = json.loads(data)
                 content_length = len(str(json.dumps(data)))
                 logging.info(f"data length: {content_length} ({one_location} ({LOCATION_DICTIONARY.get(one_location)}) on {one_date_string})")
-                if content_length < 15000:
-                    logging.info(f"Too short response: {content_length} < 30000. Skipped."
+                limit = 15000
+                if content_length < limit:
+                    logging.info(f"Too short response: {content_length} < {limit}. Skipped.")
                     skip_short_count += 1
                     continue
                 save_folder = f"./saves/{one_location}/{one_date_string_save}"
