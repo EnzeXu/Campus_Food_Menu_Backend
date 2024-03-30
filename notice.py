@@ -1,8 +1,8 @@
-notice_hours = [6
+notice_hours = [2
                 # 6,
                 # 12,
                 # 18
                 ]
-notice_minutes = [30]
+notice_minutes = [35]
 
 
