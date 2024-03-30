@@ -49,7 +49,7 @@ def http_get(cookie, url):
     }
     params = {}# 'date': date
     logging.info(url)
-    data = requests.get(url, params=params, headers=headers)
+    data = requests.get(url, params=params, headers=headers, timeout=30)
     return data.text
 
 
