@@ -2,7 +2,7 @@ import json
 import os
 import datetime
 
-from const import LOCATION_DICTIONARY
+from const import LOCATION_DICTIONARY, PERIOD_DICTIONARY
 
 
 def is_date_string_valid(date_string, date_format="%Y-%m-%d"):
@@ -42,7 +42,7 @@ def load_one_data(read_path):
     return product_data_dic
 
 
-def dump_all_data_to_json(save_path="saves/", location_dictionary=LOCATION_DICTIONARY):
+def dump_all_data_to_json(save_path="saves/", location_dictionary=LOCATION_DICTIONARY, period_dictionary=PERIOD_DICTIONARY):
     assert os.path.exists(save_path)
     available_location_list = os.listdir(save_path)
 
@@ -54,6 +54,7 @@ def dump_all_data_to_json(save_path="saves/", location_dictionary=LOCATION_DICTI
     data["location_num"] = len(available_location_list)
     data["location_list"] = available_location_list
     data["location_dictionary"] = location_dictionary
+    data["period_dictionary"] = period_dictionary
     data["location_data"] = dict()
     for one_available_location in available_location_list:
         data["location_data"][one_available_location] = dict()

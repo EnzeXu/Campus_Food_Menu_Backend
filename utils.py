@@ -13,6 +13,7 @@ from tqdm import tqdm
 # from mail import Mail
 # from strings import *
 from const import *
+from get_cookie import get_cookie
 import pytz
 import logging
 # from pretty_html_table import build_table
@@ -356,48 +357,48 @@ def one_day_job(force=False, one_time_flag=False):
 
     for one_date_string, one_date_string_save in zip(date_string_available_list, date_string_available_list_save):
         for one_location in location_list:
-            task_count += 1
             if not force and os.path.exists(f"./saves/{one_location}/") and one_date_string_save in os.listdir(f"./saves/{one_location}/"):
                 logging.info(f"'{one_date_string_save}' exists in './saves/{one_location}/'. Skipped.")
-                skip_existing_count += 1
+                skip_existing_count += len(PERIOD_LIST)
                 continue
-            try:
-                url_menu = f"https://williamandmary.campusdish.com/api/menu/GetMenus?locationId={one_location}&mode=Daily&date={one_date_string}"
-                data = http_get(complete_cookie, url_menu)
-                data = json.loads(data)
-                content_length = len(str(json.dumps(data)))
-                logging.info(f"data length: {content_length} ({one_location} ({LOCATION_DICTIONARY.get(one_location)}) on {one_date_string})")
-                limit = 15000
-                if content_length < limit:
-                    logging.info(f"Too short response: {content_length} < {limit}. Skipped.")
-                    skip_short_count += 1
-                    continue
-                save_folder = f"./saves/{one_location}/{one_date_string_save}"
-                if not os.path.exists(save_folder):
-                    os.makedirs(save_folder)
-                save_path = f"{save_folder}/{one_date_string_save}.json"
-                with open(save_path, "w") as f_json:
-                    json.dump(data, f_json, indent=4)
-                save_path_log = f"{save_folder}/save_log.txt"
-                record_date_string = get_now_string()
-                log_content = {
-                    "target_date_string": one_date_string,
-                    "launch_time": date_string_full,
-                    "record_time": record_date_string,
-                    "content_length": content_length,
-                    "Cookie": complete_cookie,
-                }
-                with open(save_path_log, "w") as f_log:
-                    f_log.write(str(log_content) + "\n")
-            except Exception as e:
-                logging.error(f"An error occurred in fetching data: {str(e)}", exc_info=True)
-                logging.info(f"Failed to deal with {one_location} ({LOCATION_DICTIONARY[one_location]}) on {one_date_string}! Skipping")
+            for one_period in PERIOD_LIST:
+                task_count += 1
+                try:
+                    url_menu = f"https://williamandmary.campusdish.com/api/menu/GetMenus?locationId={one_location}&mode=Daily&date={one_date_string}&periodId={one_period}"
+                    data = http_get(complete_cookie, url_menu)
+                    data = json.loads(data)
+                    content_length = len(str(json.dumps(data)))
+                    logging.info(f"data length: {content_length} ({one_location} ({LOCATION_DICTIONARY.get(one_location)}) on {one_date_string}: {one_period} ({PERIOD_DICTIONARY[one_period]}))")
+                    limit = 15000
+                    if content_length < limit:
+                        logging.info(f"Too short response: {content_length} < {limit}. Skipped.")
+                        skip_short_count += 1
+                        continue
+                    save_folder = f"./saves/{one_location}/{one_date_string_save}"
+                    if not os.path.exists(save_folder):
+                        os.makedirs(save_folder)
+                    save_path = f"{save_folder}/{one_period}.json"
+                    with open(save_path, "w") as f_json:
+                        json.dump(data, f_json, indent=4)
+                    save_path_log = f"{save_folder}/save_log.txt"
+                    record_date_string = get_now_string()
+                    log_content = {
+                        "target_date_string": one_date_string,
+                        "launch_time": date_string_full,
+                        "record_time": record_date_string,
+                        "content_length": content_length,
+                        "Cookie": complete_cookie,
+                    }
+                    with open(save_path_log, "a") as f_log:
+                        f_log.write(str(log_content) + "\n")
+                except Exception as e:
+                    logging.error(f"An error occurred in fetching data: {str(e)}", exc_info=True)
+                    logging.info(f"Failed to deal with {one_location} ({LOCATION_DICTIONARY[one_location]}) on {one_date_string}: {one_period} ({PERIOD_DICTIONARY[one_period]})! Skipping")
     logging.info(f"Finished. {date_string}. Total: {task_count} | Newly-downloaded: {task_count - skip_existing_count - skip_short_count} | Existing-skip: {skip_existing_count} | Short-skip: {skip_short_count}")
     print(get_now_string(), f"[ ok ] Finished {date_string}. Total: {task_count} | Newly-downloaded: {task_count - skip_existing_count - skip_short_count} | Existing-skip: {skip_existing_count} | Short-skip: {skip_short_count}")
 
 
 
-from get_cookie import get_cookie
 
 if __name__ == "__main__":
     # print(stamp_to_string(time.time()))
