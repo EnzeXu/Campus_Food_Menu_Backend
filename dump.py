@@ -2,7 +2,7 @@ import json
 import os
 import datetime
 
-from const import LOCATION_DICTIONARY, PERIOD_DICTIONARY
+from const import LOCATION_DICTIONARY, PERIOD_DICTIONARY, PERIOD_LIST
 
 
 def is_date_string_valid(date_string, date_format="%Y-%m-%d"):
@@ -39,10 +39,12 @@ def load_one_data(read_path):
         if one_product["PeriodId"] not in product_data_dic:
             product_data_dic[one_product["PeriodId"]] = []
         product_data_dic[one_product["PeriodId"]].append(simplified_product)
-    return product_data_dic
+    assert len(product_data_dic.keys()) == 1
+    period_id = list(product_data_dic.keys())[0]
+    return period_id, product_data_dic[period_id]
 
 
-def dump_all_data_to_json(save_path="saves/", location_dictionary=LOCATION_DICTIONARY, period_dictionary=PERIOD_DICTIONARY):
+def dump_all_data_to_json(save_path="saves/", location_dictionary=LOCATION_DICTIONARY, period_dictionary=PERIOD_DICTIONARY, period_list=PERIOD_LIST):
     assert os.path.exists(save_path)
     available_location_list = os.listdir(save_path)
 
@@ -65,9 +67,14 @@ def dump_all_data_to_json(save_path="saves/", location_dictionary=LOCATION_DICTI
         data["location_data"][one_available_location]["date_num"] = len(available_date_list)
         data["location_data"][one_available_location]["date_data"] = dict()
         for one_available_date in available_date_list:
-            read_file_path = f"{save_path}/{one_available_location}/{one_available_date}/{one_available_date}.json"
-            one_data = load_one_data(read_file_path)
-            data["location_data"][one_available_location]["date_data"][one_available_date] = one_data
+            data["location_data"][one_available_location]["date_data"][one_available_date] = {}
+            for one_available_period in period_list:
+                read_file_path = f"{save_path}/{one_available_location}/{one_available_date}/{one_available_period}.json"
+                if not os.path.exists(read_file_path):
+                    continue
+                one_period_id, one_period_dic = load_one_data(read_file_path)
+                data["location_data"][one_available_location]["date_data"][one_available_date][one_period_id] = one_period_dic
+
 
     # print(json.dumps(data, indent=4))
     with open(f"{save_path}/data.json", "w") as f:
