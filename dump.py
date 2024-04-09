@@ -59,10 +59,11 @@ def dump_all_data_to_json(save_path="saves/", location_dictionary=LOCATION_DICTI
         available_date_list = sorted(available_date_list)
         data["location_data"][one_available_location]["date_list"] = available_date_list
         data["location_data"][one_available_location]["date_num"] = len(available_date_list)
+        data["location_data"][one_available_location]["date_data"] = dict()
         for one_available_date in available_date_list:
             read_file_path = f"{save_path}/{one_available_location}/{one_available_date}/{one_available_date}.json"
             one_data = load_one_data(read_file_path)
-            data["location_data"][one_available_location]["date_data"] = one_data
+            data["location_data"][one_available_location]["date_data"][one_available_date] = one_data
 
     # print(json.dumps(data, indent=4))
     with open(f"{save_path}/data.json", "w") as f:
