@@ -28,15 +28,18 @@ def load_one_data(read_path):
         date_data = json.load(f)
     date_data = dict(date_data)
     # print(date_data.keys())
-    product_data_list = []
+
+    product_data_dic = dict()
     for one_product in date_data["Menu"]["MenuProducts"]:
         simplified_product = dict()
         for one_key in ["PeriodId", "StationId", "ProductId"]:
             simplified_product[one_key] = one_product[one_key] if one_key in one_product else None
         for one_key in ["MarketingName", "ShortDescription", "IsOrganic", "IsVegan", "IsVegetarian", "ServingSize", "ServingUnit", "Calories", "CaloriesFromFat", "IngredientStatement"]:
             simplified_product[one_key] = one_product["Product"][one_key] if one_key in one_product["Product"] else None
-        product_data_list.append(simplified_product)
-    return product_data_list
+        if one_product["PeriodId"] not in product_data_dic:
+            product_data_dic[one_product["PeriodId"]] = []
+        product_data_dic[one_product["PeriodId"]].append(simplified_product)
+    return product_data_dic
 
 
 def dump_all_data_to_json(save_path="saves/", location_dictionary=LOCATION_DICTIONARY):
