@@ -66,11 +66,13 @@ def dump_all_data_to_json(save_path="saves/", location_dictionary=LOCATION_DICTI
         data["location_data"][one_available_location]["date_list"] = available_date_list
         data["location_data"][one_available_location]["date_num"] = len(available_date_list)
         data["location_data"][one_available_location]["date_data"] = dict()
+        print(f"{one_available_location} available date list: {available_date_list}")
         for one_available_date in available_date_list:
             data["location_data"][one_available_location]["date_data"][one_available_date] = {}
             for one_available_period in period_list:
                 read_file_path = f"{save_path}/{one_available_location}/{one_available_date}/{one_available_period}.json"
                 if not os.path.exists(read_file_path):
+                    print(f"Path {read_file_path} not found. Skipped.")
                     continue
                 one_period_id, one_period_dic = load_one_data(read_file_path)
                 data["location_data"][one_available_location]["date_data"][one_available_date][one_period_id] = one_period_dic
