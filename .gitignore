@@ -2,7 +2,9 @@ test*
 .DS_Store
 .idea/*
 __pycache__/*
+saves_old/*
 password
+venv/*
 
 baidu*
 mail.py
