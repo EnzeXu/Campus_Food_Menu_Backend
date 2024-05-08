@@ -360,6 +360,7 @@ def one_day_job(force=False, one_time_flag=False):
             if not force and os.path.exists(f"./saves/{one_location}/") and one_date_string_save in os.listdir(f"./saves/{one_location}/"):
                 logging.info(f"'{one_date_string_save}' exists in './saves/{one_location}/'. Skipped.")
                 skip_existing_count += len(PERIOD_LIST)
+                task_count += len(PERIOD_LIST)
                 continue
             for one_period in PERIOD_LIST:
                 task_count += 1
