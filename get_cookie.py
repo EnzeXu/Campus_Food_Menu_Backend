@@ -57,4 +57,4 @@ def get_cookie(url, headless=True, chromedriver_path=None):
 if __name__ == "__main__":
     # print(platform.system().lower())
     res = get_cookie("https://williamandmary.campusdish.com/api/menu/GetMenus?locationId=78391&mode=Daily&periodId=5409", True)
-    print(res)
+    print(f"cookie_str: {res}")
