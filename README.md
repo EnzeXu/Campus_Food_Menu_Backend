@@ -124,7 +124,7 @@ You can use the command deactivate to exit the virtual environment at any time.
 (venv) ~/Campus_Food_Menu_Backend $ pip install -r requirements.txt
 ```
 
-## 5 Launch the auto-script
+# 5 Launch the auto-script
 
 ```shell
 (venv) ~/Campus_Food_Menu_Backend $ python clock_send.py
