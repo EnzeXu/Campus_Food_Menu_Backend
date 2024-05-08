@@ -6,8 +6,6 @@ Welcome to the Campus Food Menu - Backend, which is the supportive project of ou
 ---
 
 
-[TODO]
-
 ## Contents
 
 - [Introduction](#1-introduction)
@@ -18,7 +16,7 @@ Welcome to the Campus Food Menu - Backend, which is the supportive project of ou
 - [Screenshots](#6-screenshots)
 - [Questions](#7-questions)
 
-
+---
 
 
 # 1. Introduction
@@ -133,7 +131,9 @@ You can use the command deactivate to exit the virtual environment at any time.
 
 # 6. Screenshots
 
-
+![23851715196380_ pic](https://github.com/EnzeXu/Campus_Food_Menu_Backend/assets/90367338/9d528c71-d590-48fb-97aa-f76874b2b6b0)
+![23841715196345_ pic](https://github.com/EnzeXu/Campus_Food_Menu_Backend/assets/90367338/c6daf44f-298e-4a9b-8908-a5de4da63d8f)
+![23861715196615_ pic](https://github.com/EnzeXu/Campus_Food_Menu_Backend/assets/90367338/d351947d-3c78-4ff1-858e-1c9ae4aacffa)
 
 
 # 7. Questions
