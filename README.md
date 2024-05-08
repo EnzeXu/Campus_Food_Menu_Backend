@@ -15,7 +15,8 @@ Welcome to the Campus Food Menu - Backend, which is the supportive project of ou
 - [Structure of the Repository](#3-structure-of-the-repository)
 - [Getting Started](#4-getting-started)
 - [Launch the auto-script](#5-launch-the-auto-script)
-- [Questions](#6-questions)
+- [Screenshots](#6-screenshots)
+- [Questions](#7-questions)
 
 
 
@@ -130,10 +131,11 @@ You can use the command deactivate to exit the virtual environment at any time.
 (venv) ~/Campus_Food_Menu_Backend $ python clock_send.py
 ```
 
+# 6. Screenshots
 
 
 
 
-# 6. Questions
+# 7. Questions
 
 If you have any questions, please contact xezpku@gmail.com.
